@@ -48,7 +48,7 @@ This way of playing is the closest to what players in real life observe the card
 Hit on 12 if the dealer shows a 7 or higher
 ```
 ### Level 3 (all cards seen):
-- input: a vector of 54 elements representing the player handm visible cards of the dealer, and all other seen cards. This simulates what the players of Blackjack who use the *card-counting* strategy in real life aim to achieve, where one tracks what's already been dealt to make more optimal decisions.
+- input: a vector of 54 elements representing the player hand, visible cards of the dealer, and all other seen cards. This simulates what the players of Blackjack who use the *card-counting* strategy in real life aim to achieve, where one tracks what's already been dealt to make more optimal decisions.
 
 ## Training
 The model is trained using:
