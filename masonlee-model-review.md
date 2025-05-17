@@ -20,8 +20,7 @@ Instead, it plays games using evolving agents, and their performance is the feed
 
 ### Train AI with NEAT
 ```bash
-python main.py
-bash```
+python main.py```
 
 - Starts the NEAT evolution process
 - Outputs best.pickle (best genome) / output.csv (training log) / stats.png (fitness curve)
