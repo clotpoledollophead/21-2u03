@@ -1,5 +1,8 @@
 # Review of Mason Lee's BlackJack-AI — An AI trained to play Blackjack using NeuroEvolution of Augmenting Topologies (NEAT)
 
+## Original Work Link
+https://github.com/mason-lee19/Blackjack_NEAT
+
 ## Goal of the Model
 The goal of this project is to train an AI agent to play Blackjack by evolving its decision-making strategy using NEAT (NeuroEvolution of Augmenting Topologies).
 
