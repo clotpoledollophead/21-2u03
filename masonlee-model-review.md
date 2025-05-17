@@ -111,7 +111,7 @@ save_stats(stats)
 ### OS
 `Linux` on Windows(Ubuntu)
 
-### Download From github
+### Download From Github
 ```bash
 git clone https://github.com/mason-lee19/Blackjack_NEAT.git
 cd Blackjack_NEAT
