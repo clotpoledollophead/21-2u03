@@ -106,10 +106,6 @@ pickle.dump(winner, open("best.pickle", "wb"))
 save_stats(stats)
 ```
 
-## Data Generation 
-Unlike supervised learning, this project does not generate labeled data.
-Instead, it plays games using evolving agents, and their performance is the feedback.
-
 ## Usage
 
 ### Train AI with NEAT
