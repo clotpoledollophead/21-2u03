@@ -9,6 +9,9 @@ The goal of this project is to train an AI agent to play Blackjack by evolving i
 ## Learning method
 Evolve neural networks based on fitness (win rate, performance)
 
+## What is NEAT?
+NEAT (NeuroEvolution of Augmenting Topologies) is a machine learning method that evolves both the structure (topology) and the weights of neural networks using genetic algorithms. Unlike traditional supervised learning, NEAT does not require labeled data and explores increasingly complex solutions through evolution.
+
 ## NEAT Evolution Process
 This project uses NEAT (NeuroEvolution of Augmenting Topologies) to evolve the AI's Blackjack playing strategy. NEAT optimizes both the neural network's weights and topology (structure) through genetic algorithms.
 
@@ -114,5 +117,10 @@ python main.py
 - Starts the NEAT evolution process
 - Outputs best.pickle (best genome) / output.csv (training log) / stats.png (fitness curve)
 
-## Project Notes
+## Project Structure
+- `main.py`: Runs NEAT training and evolution.
+- `game.py`: Manages game logic and flow.
+- `deck.py`: Handles card deck operations.
+- `player.py`: Defines player and dealer behavior.
+- `config.txt`: NEAT configuration parameters.
 
