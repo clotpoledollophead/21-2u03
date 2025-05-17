@@ -108,9 +108,30 @@ save_stats(stats)
 
 ## Usage
 
+### OS
+`Linux` on Windows(Ubuntu)
+
+### Download From github
+```bash
+git clone https://github.com/mason-lee19/Blackjack_NEAT.git
+cd Blackjack_NEAT
+```
+
+### Create Virtual Environment
+```bash
+python -m venv venv
+source venv/bin/activate  # macOS / Linux
+venv\Scripts\activate     # Windows
+```
+
+### Install Necessary Requirment
+```bash
+pip install neat-python numpy pandas matplotlib
+```
+
 ### Train AI with NEAT
 ```bash
-python main.py
+python3 main.py
 ```
 
 - Starts the NEAT evolution process
