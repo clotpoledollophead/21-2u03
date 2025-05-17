@@ -13,6 +13,7 @@ Evolve neural networks based on fitness (win rate, performance)
 This project uses NEAT (NeuroEvolution of Augmenting Topologies) to evolve the AI's Blackjack playing strategy. NEAT optimizes both the neural network's weights and topology (structure) through genetic algorithms.
 
 ### Initialization
+`p = neat.Population(config)`
 - Random neural networks (genomes) are generated.
 - Each genome represents a possible Blackjack strategy.
 
