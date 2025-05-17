@@ -12,26 +12,93 @@ Evolve neural networks based on fitness (win rate, performance)
 ## NEAT Evolution Process
 This project uses NEAT (NeuroEvolution of Augmenting Topologies) to evolve the AI's Blackjack playing strategy. NEAT optimizes both the neural network's weights and topology (structure) through genetic algorithms.
 
-### Initialization
-`p = neat.Population(config)`
-- Random neural networks (genomes) are generated.
-- Each genome represents a possible Blackjack strategy.
+### Load Config
+```bash
+config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, config_path)
+```
 
-### Evaluation (Fitness Computation)
-- Each genome plays multiple Blackjack hands.
-- Performance metrics (e.g., win rate, final balance) are used to calculate fitness.
+Load evolution parameters from `config.txt` including population size, mutation rates, etc.
 
-### Selection & Reproduction
-- Genomes with higher fitness are selected.
-- Crossover (recombining structures) and mutation (random changes) create new offspring.
+### Initialize Population
+```bash
+p = neat.Population(config)
+```
+Create the initial generation of genomes (candidate solutions).
 
-### Speciation
-- Similar genomes are grouped into species.
-- Diversity is preserved by allowing niche species to evolve.
+### Add Reporters
+```bash
+p.add_reporter(neat.StdOutReporter(True))
+p.add_reporter(neat.StatisticsReporter())
+```
+Add console outputs and statistics tracking to monitor evolution progress.
 
-### Repeat Until Convergence
-- The process repeats across generations.
-- Stops when maximum generations are reached or desired performance is achieved.
+### Run Evolution Process
+```bash
+winner = p.run(eval_genomes, generations)
+```
+Start the NEAT evolution loop, running for N generations.
+
+
+### Evaluate Each Genome
+```bash
+def eval_genomes(genomes, config):
+    for genome_id, genome in genomes:
+        game = Game(genome, config)
+        genome.fitness = game.run()
+```
+For each genome in the population, simulate a Blackjack game to assess performance.
+
+## Game.run(Blackjack Simulation Flow)
+
+### Initialize Game
+```bash
+self.player = TablePlayer()
+self.dealer = Dealer()
+```
+Set up the player and dealer hands.
+
+### Player Decision Making
+```bash
+while not self.player.done:
+    action = self.player_decision()
+    if action == 'hit':
+        self.player.hit(self.deck)
+    elif action == 'stand':
+        break
+```
+The player's neural network decides whether to hit, stand, or double based on the current game state.
+
+### Dealer Logic
+```bash
+while self.dealer.score < 17:
+    self.dealer.hit(self.deck)
+```
+Dealer follows simple rules: hit until reaching 17 or more.
+
+### Determine Result
+```bash
+result = self.calculate_result()
+self.fitness += result
+```
+Compare player and dealer scores, decide win/lose/draw, apply scoring.
+
+### Return Fitness
+```bash
+return self.fitness
+```
+After finishing the round, return the accumulated fitness score.
+
+## Save Best Genome & Logs
+
+### Save the best-performing genome as `best.pickle`.
+```bash
+pickle.dump(winner, open("best.pickle", "wb"))
+```
+
+### Save stats (fitness curve) and output log.
+```bash
+save_stats(stats)
+```
 
 ## Data Generation 
 Unlike supervised learning, this project does not generate labeled data.
