@@ -131,7 +131,7 @@ pip install neat-python numpy pandas matplotlib
 
 ### Train AI with NEAT
 ```bash
-python3 main.py
+python main.py
 ```
 
 - Starts the NEAT evolution process
