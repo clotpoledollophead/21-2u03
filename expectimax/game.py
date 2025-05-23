@@ -105,7 +105,9 @@ class Player:
             d = op_v
             p = self.calculate_hand_value()
             h = [0, 0]
+            t1 = 0
             s = [0, 0]
+            t2 = 0
             for c in C:
                 G = C.copy()
                 G.remove(c)
@@ -114,7 +116,10 @@ class Player:
                     prd = c.value+d
                 elif d>10 and c.value == 11:
                     prd = 1+d
-                s[0] += p-prd
+                if prd <= 17:
+                    s[0] += p-17
+                else:
+                    s[0] += p-prd
                 s[1] += 1
                 for g in G:
                     prp = 0
@@ -123,10 +128,14 @@ class Player:
                     elif p>10 and g.value == 11:
                         prp = 1+p
 
-                    if p > 21:
-                        h[0] += -21
+                    if prp > 21:
+                        h[1] += 1
+                        continue
                     else:
-                        h[0] += prp - prd
+                        if prd <= 17:
+                            h[0] += prp - 17
+                        else:
+                            h[0] += prp - prd
                     h[1] += 1
             h1, s1 = h[0]/h[1], s[0]/s[1]
             #print(h1, s1)
@@ -134,9 +143,6 @@ class Player:
                 return "hit"
             else: 
                 return "stand"
-
-
-
 
     def show_hand(self) -> str:
         if self.noshow:
@@ -165,12 +171,12 @@ class BlackjackGame:
         # game main loop
         self.pend = False
         self.dend = False
-        while not self.pend and not self.dend:
+        while not self.pend or not self.dend:
             if detail:
                 print(f"\n{self.dealer.name}:")
-                if self.pend:
-                    while 1:
-                        action = self.dealer.decide_action()
+            if self.pend:
+                while 1:
+                        action = self.dealer.decide_action(1)
                         if action == "hit":
                             card = self.deck.deal()
                             self.dealer.add_card(card)
@@ -182,7 +188,8 @@ class BlackjackGame:
                         else:
                             self.dend = True
                             break
-                print(f"{self.dealer.name} card:{self.dealer.show_hand()}, total:{self.dealer.calculate_hand_value()}")
+                if detail:
+                    print(f"{self.dealer.name} card:{self.dealer.show_hand()}, total:{self.dealer.calculate_hand_value()}")
             for player in self.players:
                 if player.is_standing:
                     continue
@@ -229,25 +236,28 @@ class BlackjackGame:
         valid_players = [p for p in self.players if not p.is_busted]
 
         if not valid_players:
-            print("all bust, no winner.")
+            if detail:
+                print("all bust, no winner.")
             return 0
 
         # find the player with highest point
         max_value = max(p.calculate_hand_value() for p in valid_players)
         winners = [p for p in valid_players if p.calculate_hand_value() == max_value]
         c = self.dealer.calculate_hand_value()
-        if max_value < c:
+        if max_value < c and c <= 21:
             max_value = c
             winners = [self.dealer]
         elif max_value == c:
             winners.append(self.dealer)
 
         if len(winners) == 1:
-            print(f"winner is {winners[0].name}, total: {max_value}")
+            if detail:
+                print(f"winner is {winners[0].name}, total: {max_value}")
             if winners[0].name == "dealer":
                 return 1
             else:
                 return 2
         else:
-            print(f"draw, value: {max_value}")
+            if detail:
+                print(f"draw, value: {max_value}")
             return 0
