@@ -23,13 +23,19 @@ cd 21-2u03
 ```
 ### 🔧 Install Dependencies
 We recommend using a virtual environment in your command line before installing dependencies:
-```bash
-# Create a virtual environment
-python -m venv blackjack_venv
 
-# Activate the virtual environment
+1. Create a virtual environment
+```bash
+python -m venv blackjack_venv
+```
+
+2. Activate the virtual environment
+```bash
 # For Windows
 .\blackjack_venv\Scripts\activate
+```
+
+```bash
 # For macOs/Linux
 source blackjack_venv/bin/activate
 ```
