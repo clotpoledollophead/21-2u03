@@ -79,7 +79,7 @@ class Player:
                 num_aces -= 1
         return value
 
-    def decide_action(self, op_v:1) -> str:
+    def decide_action(self, op_v:1, cardd) -> str:
         if self.id == 0:
             # dealer：if less than 17 hit, or stand
             if len(self.hand) == 2:
@@ -102,6 +102,7 @@ class Player:
             C = [Card(suit, rank) for suit in SUITS for rank in RANKS]
             for card in self.hand:
                 C.remove(card)
+            C.remove(cardd)
             d = op_v
             p = self.calculate_hand_value()
             h = [0, 0]
@@ -176,7 +177,7 @@ class BlackjackGame:
                 print(f"\n{self.dealer.name}:")
             if self.pend:
                 while 1:
-                        action = self.dealer.decide_action(1)
+                        action = self.dealer.decide_action(1, self.dealer.hand[0])
                         if action == "hit":
                             card = self.deck.deal()
                             self.dealer.add_card(card)
@@ -199,7 +200,7 @@ class BlackjackGame:
                     #if player.id != 0:
                     print(f"{player.name} card:{player.show_hand()}, total:{player.calculate_hand_value()}")
 
-                action = player.decide_action(self.dealer.calculate_hand_value())
+                action = player.decide_action(self.dealer.calculate_hand_value(), self.dealer.hand[0])
 
                 if action == "hit":
                     card = self.deck.deal()
