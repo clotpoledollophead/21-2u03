@@ -39,3 +39,9 @@ python -m venv blackjack_venv
 # For macOs/Linux
 source blackjack_venv/bin/activate
 ```
+
+## ▶️ Usage
+Once you've completed the [Installation](#-installation) steps, you can run the Blackjack AIs.
+### 🏃‍♂️ Running
+
+## 📝 License
