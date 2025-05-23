@@ -38,11 +38,10 @@ def play_blackjack():
     plt.plot(x, d, "k")
     plt.legend(["win rate", "lose rate", "draw rate"])
     plt.savefig('test.png')
-    print('1000run, for each run 1000 games:')
+    print(f'{args.numgames} runs, for each run {args.rnum} games:')
     print(f'win: {round(np.mean(w), 2)}±{round(np.std(w), 2)}%')
     print(f'lose: {round(np.mean(l), 2)}±{round(np.std(l), 2)}%')
     print(f'draw: {round(np.mean(d), 2)}±{round(np.std(d), 2)}%')
-
 
 if __name__ == "__main__":
     play_blackjack()
