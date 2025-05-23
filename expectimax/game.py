@@ -1,5 +1,6 @@
 import random
 from typing import List, Optional
+import copy
 
 SUITS = ["♠", "♥", "♦", "♣"]
 RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
@@ -19,7 +20,6 @@ VALUES = {
     "A": 11,
 }
 
-
 class Card:
     def __init__(self, suit: str, rank: str):
         self.suit = suit
@@ -28,6 +28,12 @@ class Card:
 
     def __str__(self):
         return f"{self.suit}{self.rank}"
+    
+    def __eq__(self, other):
+        return isinstance(other, Card) and self.suit == other.suit and self.rank == other.rank
+    
+    def __hash__(self):
+        return hash((self.suit, self.rank))
 
 
 class Deck:
@@ -73,7 +79,7 @@ class Player:
                 num_aces -= 1
         return value
 
-    def decide_action(self) -> str:
+    def decide_action(self, op_v:1) -> str:
         if self.id == 0:
             # dealer：if less than 17 hit, or stand
             if len(self.hand) == 2:
@@ -93,10 +99,44 @@ class Player:
                 else:
                     print("invalid")
         elif self.id == 2: #for ai agent
-            if self.calculate_hand_value() < 18:
+            C = [Card(suit, rank) for suit in SUITS for rank in RANKS]
+            for card in self.hand:
+                C.remove(card)
+            d = op_v
+            p = self.calculate_hand_value()
+            h = [0, 0]
+            s = [0, 0]
+            for c in C:
+                G = C.copy()
+                G.remove(c)
+                prd = 0
+                if d <= 10:
+                    prd = c.value+d
+                elif d>10 and c.value == 11:
+                    prd = 1+d
+                s[0] += p-prd
+                s[1] += 1
+                for g in G:
+                    prp = 0
+                    if p <= 10:
+                        prp = g.value+p
+                    elif p>10 and g.value == 11:
+                        prp = 1+p
+
+                    if p > 21:
+                        h[0] += -21
+                    else:
+                        h[0] += prp - prd
+                    h[1] += 1
+            h1, s1 = h[0]/h[1], s[0]/s[1]
+            #print(h1, s1)
+            if h1 > s1:
                 return "hit"
-            else:
+            else: 
                 return "stand"
+
+
+
 
     def show_hand(self) -> str:
         if self.noshow:
@@ -152,7 +192,7 @@ class BlackjackGame:
                     #if player.id != 0:
                     print(f"{player.name} card:{player.show_hand()}, total:{player.calculate_hand_value()}")
 
-                action = player.decide_action()
+                action = player.decide_action(self.dealer.calculate_hand_value())
 
                 if action == "hit":
                     card = self.deck.deal()
