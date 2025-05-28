@@ -19,7 +19,7 @@ agents = {
 AGENT_OPTIONS = ["Manual"] + list(agents.keys())
 CARD_DIR = "cards"
 
-BG_COLOR = "#05813D"
+BG_COLOR = "#03421F"
 TEXT_COLOR = "#FFD700"
 BUTTON_COLOR = "#DAA520"
 BUTTON_TEXT_COLOR = "black"
@@ -216,13 +216,16 @@ class BlackjackGUI:
         self.stats[result] += 1
         self.history.append({"player": self.env.player_hand.copy(), "dealer": self.env.dealer_hand.copy(), "result": result, "mode": self.ai_choice.get()})
         self.remaining_auto_rounds -= 1
-        if self.remaining_auto_rounds > 0:
-            self.reset_game()
-            self.root.after(500, self.auto_play)
-        elif self.remaining_auto_rounds == 0:
-            self.final_result = result
-            self.update_display(reveal_dealer=True)
-            self.root.after(500, lambda: self.show_continue_dialog(self.final_result))
+        if self.ai_choice.get() == "Manual":
+            self.root.after(500, lambda: self.show_manual_end_dialog(result))
+        else:
+            if self.remaining_auto_rounds > 0:
+                self.reset_game()
+                self.root.after(500, self.auto_play)
+            elif self.remaining_auto_rounds == 0:
+                self.final_result = result
+                self.update_display(reveal_dealer=True)
+                self.root.after(500, lambda: self.show_continue_dialog(self.final_result))
 
     def show_continue_dialog(self, result):
         dialog = Toplevel(self.root)
@@ -233,6 +236,21 @@ class BlackjackGUI:
         tk.Button(dialog, text="Continue", font=BUTTON_FONT, width=12, bg="#228B22", fg="white", command=lambda: self.continue_ai_next(dialog)).pack(pady=10)
         tk.Button(dialog, text="Stop", font=BUTTON_FONT, width=12, bg="#8B0000", fg="white", command=lambda: self.stop_game(dialog)).pack()
 
+    def show_manual_end_dialog(self, result):
+        dialog = Toplevel(self.root)
+        dialog.title("Game Over")
+        dialog.configure(bg=BG_COLOR)
+        dialog.geometry("+0+0")
+        tk.Label(dialog, text=f"Result: {result.upper()}", font=LABEL_FONT, fg=TEXT_COLOR, bg=BG_COLOR).pack(pady=20)
+        tk.Button(dialog, text="Play Again", font=BUTTON_FONT, width=12, bg="#228B22", fg="white", command=lambda: self.restart_manual(dialog)).pack(pady=10)
+        tk.Button(dialog, text="Stop", font=BUTTON_FONT, width=12, bg="#8B0000", fg="white", command=lambda: self.stop_game(dialog)).pack()
+
+    def restart_manual(self, dialog):
+        dialog.destroy()
+        self.reset_game()
+        self.hit_button.config(state="normal")
+        self.stand_button.config(state="normal")
+     
     def continue_ai_next(self, dialog):
         dialog.destroy()
         self.remaining_auto_rounds = self.auto_rounds.get()
@@ -314,3 +332,5 @@ class BlackjackGUI:
 root = tk.Tk()
 gui = BlackjackGUI(root)
 root.mainloop()
+
+
