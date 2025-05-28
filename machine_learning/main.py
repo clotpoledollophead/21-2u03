@@ -38,7 +38,7 @@ def simulate(agent, env, num_games=1000):
 
     return result
 
-REPEATS = 5
+REPEATS = 100
 GAMES = 1000
 
 agents = {
