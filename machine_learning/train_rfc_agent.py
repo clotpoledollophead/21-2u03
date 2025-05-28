@@ -6,11 +6,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 import joblib
 
-df = pd.read_csv("blackjack_simulator.csv", nrows=100000)
+df = pd.read_csv("blackjack_simulator.csv", nrows=1000000)
 
 data_rows = []
 
-for idx, row in tqdm(df.iterrows(), total=len(df), desc="整理決策資料"):
+# Process data for training
+for idx, row in tqdm(df.iterrows(), total=len(df), desc="Processing data"):
     try:
         initial_hand = ast.literal_eval(row['initial_hand'])
         dealer_up = row['dealer_up']
@@ -34,24 +35,27 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="整理決策資料"):
             })
 
             if action == 'H':
-                player_cards.append(0)
+                player_cards.append(0)  # Placeholder for drawn card
             elif action == 'S':
                 break
     except Exception:
         continue
 
+# Create DataFrame
 train_df = pd.DataFrame(data_rows)
 
+# Prepare features and labels
 X = train_df[['player_sum', 'is_soft', 'num_cards', 'dealer_up', 'action']]
 y = train_df['win']
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
+# Train RandomForest model
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
-print("\n分類報告:")
+print("\nClassification report:")
 print(classification_report(y_test, y_pred))
 
 joblib.dump(model, "rfc_model.pkl")
-print("模型已儲存為 rfc_model.pkl")
+print("Model saved as rfc_model.pkl")
