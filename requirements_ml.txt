@@ -1,7 +1,18 @@
-argparse
-joblib
-pandas
-scikit-learn
-tqdm
+# Data processing
 numpy
+pandas
+tqdm
+
+# Machine Learning
+scikit-learn
+joblib
+
+# NEAT Algorithm
 neat-python
+
+# Visualization
+matplotlib
+
+# GUI
+tk
+Pillow
