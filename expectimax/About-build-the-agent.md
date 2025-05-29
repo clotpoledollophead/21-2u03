@@ -30,3 +30,4 @@ Finally, divide by the respective counts to get the expected value.
 The experimental results have a win rate of about 40%, which I think is quite high for an agent using the expectimax algorithm, given that a large portion of the game is dominated by chance. 
 
 And the variance is not more than 1.5%, so it's a pretty stable agent.
+![experimental result](https://github.com/clotpoledollophead/21-2u03/blob/main/expectimax/result.png)
