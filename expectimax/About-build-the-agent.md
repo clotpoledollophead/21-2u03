@@ -25,7 +25,9 @@ Calculation continues from the previous loop's dealer value.
 
 It is stored in the ‘Hit’ expectation.
 
-Finally, divide by the respective counts to get the expected value.
+Finally, divide by the respective counts to get the expected values.
+
+Then, determine 'Stand' or 'Hit' by the final value, with the greater one being chosen.
 ## Result
 The experimental results have a win rate of about 40%, which I think is quite high for an agent using the expectimax algorithm, given that a large portion of the game is dominated by chance. 
 
