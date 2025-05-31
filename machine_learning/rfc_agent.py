@@ -1,17 +1,23 @@
-import pandas as pd
-import joblib
+import json
 
 class RFCAgent:
-    def __init__(self, model_path):
-        self.model = joblib.load(model_path)
+    def __init__(self, model_file):
+        with open(model_file, 'r') as f:
+            self.forest = json.load(f)
 
     def act(self, player_sum, dealer_card, is_soft, num_cards):
-        df = pd.DataFrame([
-            [player_sum, is_soft, num_cards, dealer_card, 0],
-            [player_sum, is_soft, num_cards, dealer_card, 1]
-        ], columns=['player_sum', 'is_soft', 'num_cards', 'dealer_up', 'action'])
+        features = [player_sum, dealer_card, int(is_soft), num_cards]
+        votes = []
+        for tree in self.forest:
+            votes.append(self.predict_tree(features, tree))
+        decision = max(set(votes), key=votes.count)
+        return "hit" if decision == 0 else "stand"
 
-        probs = self.model.predict_proba(df)[:, 1]
+    def predict_tree(self, x, node):
+        if not isinstance(node, dict):
+            return node
+        if x[node['feature']] <= node['threshold']:
+            return self.predict_tree(x, node['left'])
+        else:
+            return self.predict_tree(x, node['right'])
 
-        best_action = 0 if probs[0] > probs[1] else 1
-        return 'hit' if best_action == 0 else 'stand'
