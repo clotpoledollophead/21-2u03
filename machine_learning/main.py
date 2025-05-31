@@ -45,7 +45,7 @@ DECKS = 10000000
 agents = {
     "RFC AI": RFCAgent("rfc_model.json"),
     "Random AI": RandomAgent(),
-    "NEAT AI": NEATAgent("neat_model.pkl"),
+    "NEAT AI": NEATAgent("neat_model.pkl","neat_config.txt"),
     "Basic Strategy AI": BasicStrategyAgent()
 }
 
