@@ -2,12 +2,11 @@ from blackjack_env import BlackjackEnv
 
 class ExpectimaxAgent:
     def __init__(self):
-        self.env = None  # 不需要，留空保持一致
-
+        self.env = None 
     def act(self, player_sum, dealer_card, is_soft, num_cards):
         from blackjack_env import BlackjackEnv
         env = BlackjackEnv()
-        env.player_hand = [(player_sum, '')]  # 模擬數值，不重要
+        env.player_hand = [(player_sum, '')] 
         env.dealer_hand = [(dealer_card, '')]
 
         deck = env.deck.copy()
