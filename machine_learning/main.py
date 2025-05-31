@@ -2,11 +2,11 @@ from blackjack_env import BlackjackEnv
 from rfc_agent import RFCAgent
 from random_agent import RandomAgent
 from neat_agent import NEATAgent
-from Qlearning_agent import QLearningAgent
 from basic_strategy_agent import BasicStrategyAgent
 from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
+
 
 plt.rcParams['font.sans-serif'] = ['Microsoft JhengHei']
 plt.rcParams['axes.unicode_minus'] = False
@@ -38,36 +38,36 @@ def simulate(agent, env, num_games=1000):
 
     return result
 
-REPEATS = 100
+REPEATS = 1000
 GAMES = 1000
+DECKS = 10000000
 
 agents = {
-    "RFC AI": RFCAgent("rfc_model.pkl"),
+    "RFC AI": RFCAgent("rfc_model.json"),
     "Random AI": RandomAgent(),
-    "NEAT AI": NEATAgent("neat_model.pkl", "neat_config.txt"),
-    "QLearning AI": QLearningAgent(),
+    "NEAT AI": NEATAgent("neat_model.pkl"),
     "Basic Strategy AI": BasicStrategyAgent()
 }
-
-agents["QLearning AI"].load_qtable("q_table.json")
 
 win_rates = {name: [] for name in agents}
 
 for name, agent in agents.items():
-    env = BlackjackEnv(num_decks=1)
+    env = BlackjackEnv(num_decks=DECKS)
     for _ in tqdm(range(REPEATS), desc=f"{name} ", ncols=80):
         result = simulate(agent, env, GAMES)
         win_rates[name].append(result['win'] / GAMES)
 
 x = np.arange(1, REPEATS + 1)
 for name in agents:
-    plt.plot(x, win_rates[name], label=f"{name}（average {np.mean(win_rates[name]):.2%}）")
+    avg_win_rate = np.mean(win_rates[name])
+    plt.plot(x, win_rates[name], label=f"{name} (Avg={avg_win_rate:.2%})")
 
-plt.title("Blackjack Win Rate Compare: NEAT vs RFC vs Random vs RL vs Basic Strategy", fontsize=10)
+plt.title(f"Blackjack Win Rate Compare (Decks={DECKS}): NEAT vs RFC vs Random vs Basic Strategy", fontsize=10)
+plt.xlabel("Repeat")
 plt.ylabel("Win Rate")
 plt.ylim(0, 1)
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
-plt.savefig("compare.png")
+plt.savefig(f"compare_decks_{DECKS}.png")
 plt.show()
