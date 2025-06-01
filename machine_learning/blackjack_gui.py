@@ -14,7 +14,7 @@ env = BlackjackEnv()
 agents = {
     "Random": RandomAgent(),
     "RFC": RFCAgent("rfc_model.json"),
-    "NEAT": NEATAgent("neat_model.pkl","neat_config.txt"),
+    "NEAT": NEATAgent("neat_model.json"),
     "BasicStrategy": BasicStrategyAgent(),
     "Expectimax": ExpectimaxAgent()
 }
@@ -344,3 +344,5 @@ class BlackjackGUI:
 root = tk.Tk()
 gui = BlackjackGUI(root)
 root.mainloop()
+
+
