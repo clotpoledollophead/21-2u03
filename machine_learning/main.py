@@ -40,12 +40,12 @@ def simulate(agent, env, num_games=1000):
 
 REPEATS = 1000
 GAMES = 1000
-DECKS = 10000000
+DECKS = 1
 
 agents = {
     "RFC AI": RFCAgent("rfc_model.json"),
     "Random AI": RandomAgent(),
-    "NEAT AI": NEATAgent("neat_model.pkl","neat_config.txt"),
+    "NEAT AI": NEATAgent("neat_model.json"),
     "Basic Strategy AI": BasicStrategyAgent()
 }
 
