@@ -41,6 +41,7 @@ source blackjack_venv/bin/activate
 Once you've completed the [Installation](#-installation) steps, you can run the Blackjack AIs.
 ### 🏃‍♂️ Running
 Navigate to the machine_learning folder, and run the following code:
+
 train RFC model
 ```python
 python train_rfc_agent.py
