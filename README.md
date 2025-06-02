@@ -1,13 +1,10 @@
 # BlackJack
-<sub>Final Project, Introduction to AI, Spring 2025, NYCU</sub>
+<sub>Final Project (Group 5), Introduction to AI, Spring 2025, NYCU</sub>
 
 ## Table of Contents
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 Many casino games that we see and hear of rely purely on skill—examples include the famous roulettes, slots, etc.—however, Blackjack stands out as one in only a handful of games where strategy matters.
@@ -43,5 +40,7 @@ source blackjack_venv/bin/activate
 ## ▶️ Usage
 Once you've completed the [Installation](#-installation) steps, you can run the Blackjack AIs.
 ### 🏃‍♂️ Running
-
-## 📝 License
+Navigate to the machine_learning folder, and run the following code:
+```python
+python blackjack_gui.py
+```
