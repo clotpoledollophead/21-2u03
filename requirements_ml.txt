@@ -2,12 +2,8 @@ numpy
 pandas
 tqdm
 
-# Machine Learning
-joblib
-
 # Visualization
 matplotlib
 
 # GUI
-tk
 Pillow
