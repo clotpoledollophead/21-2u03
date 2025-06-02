@@ -3,9 +3,7 @@ pandas
 tqdm
 
 # Machine Learning
-scikit-learn
 joblib
-neat-python
 
 # Visualization
 matplotlib
