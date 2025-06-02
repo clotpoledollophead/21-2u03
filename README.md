@@ -41,6 +41,20 @@ source blackjack_venv/bin/activate
 Once you've completed the [Installation](#-installation) steps, you can run the Blackjack AIs.
 ### 🏃‍♂️ Running
 Navigate to the machine_learning folder, and run the following code:
+train RFC model
+```python
+python train_rfc_agent.py
+```
+train NEAT model
+```python
+python train_neat_agent.py
+```
+Run the experiment 
+```python
+python main.py
+```
+Run the small game application
 ```python
 python blackjack_gui.py
 ```
+
