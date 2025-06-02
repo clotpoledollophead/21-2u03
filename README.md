@@ -40,6 +40,10 @@ source blackjack_venv/bin/activate
 ## ▶️ Usage
 Once you've completed the [Installation](#-installation) steps, you can run the Blackjack AIs.
 ### 🏃‍♂️ Running
+Navigate to the expectimax folder, and run the following code: 
+```python
+python main.py -n 1000 -rn 1000 -a -s
+```
 Navigate to the machine_learning folder, and run the following code:
 
 train RFC model
